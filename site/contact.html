@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact | Jabo &amp; Associates</title>
+  <meta name="description" content="Send a trade inquiry to Jabo &amp; Associates. Buyers, suppliers, mandates, investors and solar &amp; EV clients get a response within 48 hours.">
+  <link rel="canonical" href="https://jaboassociates.business/contact.html">
+  <meta name="theme-color" content="#111111">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Jabo &amp; Associates">
+  <meta property="og:title" content="Contact | Jabo &amp; Associates">
+  <meta property="og:description" content="Send a trade inquiry to Jabo &amp; Associates. Buyers, suppliers, mandates, investors and solar &amp; EV clients get a response within 48 hours.">
+  <meta property="og:url" content="https://jaboassociates.business/contact.html">
+  <meta property="og:image" content="https://jaboassociates.business/images/og.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Contact | Jabo &amp; Associates">
+  <meta name="twitter:description" content="Send a trade inquiry to Jabo &amp; Associates. Buyers, suppliers, mandates, investors and solar &amp; EV clients get a response within 48 hours.">
+  <meta name="twitter:image" content="https://jaboassociates.business/images/og.jpg">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+  <link rel="preload" href="fonts/newsreader-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/main.js" defer></script>
+  <script src="js/contact.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="index.html" aria-label="Jabo &amp; Associates home">
+      <img src="images/logo-mark.webp" alt="" width="46" height="46">
+      <span class="brand-text">
+        <span class="brand-name">Jabo &amp; Associates</span>
+        <span class="brand-tag">Minerals | Petroleum | Green Energy</span>
+      </span>
+    </a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="nav" id="site-nav" aria-label="Main" data-open="false">
+        <a href="about.html">About</a>
+        <a href="team.html">Team</a>
+        <a href="products.html">Commodities</a>
+        <a href="exchange.html">Exchange</a>
+        <a href="services.html">Services</a>
+        <a href="solar-ev.html">Solar &amp; EVs</a>
+        <a class="btn btn--gold" href="contact.html">Send an Inquiry</a>
+    </nav>
+  </div>
+</header>
+  <main id="main">
+    <section class="page-hero">
+      <div class="page-hero-bg">
+        <img src="images/barges-1280.webp" srcset="images/barges-480.webp 480w, images/barges-800.webp 800w, images/barges-1280.webp 1280w, images/barges-1920.webp 1920w" sizes="100vw" width="1280" height="720" alt="" loading="eager" fetchpriority="high" decoding="async" style="object-position: center 40%">
+      </div>
+      <div class="container">
+        <div class="page-hero-inner">
+          <span class="eyebrow">Contact</span>
+          <h1>Tell us what you need</h1>
+        <p class="lead">Whether you are buying, supplying or looking to partner, tell us what you need and our team will respond within 48 hours.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container contact-layout">
+        <div>
+          <form class="form" id="inquiry-form" method="post" action="api/inquiry.php" enctype="multipart/form-data" novalidate>
+            <div class="form-row">
+              <div class="field">
+                <label for="name">Full name <span class="req">*</span></label>
+                <input id="name" name="name" type="text" autocomplete="name" required>
+              </div>
+              <div class="field">
+                <label for="company">Company name <span class="req">*</span></label>
+                <input id="company" name="company" type="text" autocomplete="organization" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="field">
+                <label for="email">Email <span class="req">*</span></label>
+                <input id="email" name="email" type="email" autocomplete="email" required>
+              </div>
+              <div class="field">
+                <label for="phone">Phone / WhatsApp <span class="req">*</span></label>
+                <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="+233 24 000 0000" pattern="\+[0-9 ()\-]{7,}" title="Include the country code, for example +233 24 000 0000" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="field">
+                <label for="country">Country <span class="req">*</span></label>
+                <select id="country" name="country" required>
+                  <option value="">Select a country</option>
+                  <option>Ghana</option>
+                  <option>Afghanistan</option>
+                  <option>Albania</option>
+                  <option>Algeria</option>
+                  <option>Andorra</option>
+                  <option>Angola</option>
+                  <option>Antigua &amp; Barbuda</option>
+                  <option>Argentina</option>
+                  <option>Armenia</option>
+                  <option>Australia</option>
+                  <option>Austria</option>
+                  <option>Azerbaijan</option>
+                  <option>Bahamas</option>
+                  <option>Bahrain</option>
+                  <option>Bangladesh</option>
+                  <option>Barbados</option>
+                  <option>Belarus</option>
+                  <option>Belgium</option>
+                  <option>Belize</option>
+                  <option>Benin</option>
+                  <option>Bhutan</option>
+                  <option>Bolivia</option>
+                  <option>Bosnia &amp; Herzegovina</option>
+                  <option>Botswana</option>
+                  <option>Brazil</option>
+                  <option>Brunei</option>
+                  <option>Bulgaria</option>
+                  <option>Burkina Faso</option>
+                  <option>Burundi</option>
+                  <option>Cambodia</option>
+                  <option>Cameroon</option>
+                  <option>Canada</option>
+                  <option>Cape Verde</option>
+                  <option>Central African Republic</option>
+                  <option>Chad</option>
+                  <option>Chile</option>
+                  <option>China</option>
+                  <option>Colombia</option>
+                  <option>Comoros</option>
+                  <option>Congo - Brazzaville</option>
+                  <option>Congo - Kinshasa</option>
+                  <option>Costa Rica</option>
+                  <option>Côte d’Ivoire</option>
+                  <option>Croatia</option>
+                  <option>Cuba</option>
+                  <option>Cyprus</option>
+                  <option>Czechia</option>
+                  <option>Denmark</option>
+                  <option>Djibouti</option>
+                  <option>Dominica</option>
+                  <option>Dominican Republic</option>
+                  <option>Ecuador</option>
+                  <option>Egypt</option>
+                  <option>El Salvador</option>
+                  <option>Equatorial Guinea</option>
+                  <option>Eritrea</option>
+                  <option>Estonia</option>
+                  <option>Eswatini</option>
+                  <option>Ethiopia</option>
+                  <option>Fiji</option>
+                  <option>Finland</option>
+                  <option>France</option>
+                  <option>Gabon</option>
+                  <option>Gambia</option>
+                  <option>Georgia</option>
+                  <option>Germany</option>
+                  <option>Greece</option>
+                  <option>Grenada</option>
+                  <option>Guatemala</option>
+                  <option>Guinea</option>
+                  <option>Guinea-Bissau</option>
+                  <option>Guyana</option>
+                  <option>Haiti</option>
+                  <option>Honduras</option>
+                  <option>Hong Kong SAR China</option>
+                  <option>Hungary</option>
+                  <option>Iceland</option>
+                  <option>India</option>
+                  <option>Indonesia</option>
+                  <option>Iran</option>
+                  <option>Iraq</option>
+                  <option>Ireland</option>
+                  <option>Israel</option>
+                  <option>Italy</option>
+                  <option>Jamaica</option>
+                  <option>Japan</option>
+                  <option>Jordan</option>
+                  <option>Kazakhstan</option>
+                  <option>Kenya</option>
+                  <option>Kiribati</option>
+                  <option>Kuwait</option>
+                  <option>Kyrgyzstan</option>
+                  <option>Laos</option>
+                  <option>Latvia</option>
+                  <option>Lebanon</option>
+                  <option>Lesotho</option>
+                  <option>Liberia</option>
+                  <option>Libya</option>
+                  <option>Liechtenstein</option>
+                  <option>Lithuania</option>
+                  <option>Luxembourg</option>
+                  <option>Madagascar</option>
+                  <option>Malawi</option>
+                  <option>Malaysia</option>
+                  <option>Maldives</option>
+                  <option>Mali</option>
+                  <option>Malta</option>
+                  <option>Mauritania</option>
+                  <option>Mauritius</option>
+                  <option>Mexico</option>
+                  <option>Moldova</option>
+                  <option>Monaco</option>
+                  <option>Mongolia</option>
+                  <option>Montenegro</option>
+                  <option>Morocco</option>
+                  <option>Mozambique</option>
+                  <option>Myanmar (Burma)</option>
+                  <option>Namibia</option>
+                  <option>Nepal</option>
+                  <option>Netherlands</option>
+                  <option>New Zealand</option>
+                  <option>Nicaragua</option>
+                  <option>Niger</option>
+                  <option>Nigeria</option>
+                  <option>North Macedonia</option>
+                  <option>Norway</option>
+                  <option>Oman</option>
+                  <option>Pakistan</option>
+                  <option>Panama</option>
+                  <option>Papua New Guinea</option>
+                  <option>Paraguay</option>
+                  <option>Peru</option>
+                  <option>Philippines</option>
+                  <option>Poland</option>
+                  <option>Portugal</option>
+                  <option>Qatar</option>
+                  <option>Romania</option>
+                  <option>Russia</option>
+                  <option>Rwanda</option>
+                  <option>Samoa</option>
+                  <option>San Marino</option>
+                  <option>São Tomé &amp; Príncipe</option>
+                  <option>Saudi Arabia</option>
+                  <option>Senegal</option>
+                  <option>Serbia</option>
+                  <option>Seychelles</option>
+                  <option>Sierra Leone</option>
+                  <option>Singapore</option>
+                  <option>Slovakia</option>
+                  <option>Slovenia</option>
+                  <option>Solomon Islands</option>
+                  <option>Somalia</option>
+                  <option>South Africa</option>
+                  <option>South Korea</option>
+                  <option>South Sudan</option>
+                  <option>Spain</option>
+                  <option>Sri Lanka</option>
+                  <option>St. Kitts &amp; Nevis</option>
+                  <option>St. Lucia</option>
+                  <option>St. Vincent &amp; Grenadines</option>
+                  <option>Sudan</option>
+                  <option>Suriname</option>
+                  <option>Sweden</option>
+                  <option>Switzerland</option>
+                  <option>Syria</option>
+                  <option>Taiwan</option>
+                  <option>Tajikistan</option>
+                  <option>Tanzania</option>
+                  <option>Thailand</option>
+                  <option>Timor-Leste</option>
+                  <option>Togo</option>
+                  <option>Tonga</option>
+                  <option>Trinidad &amp; Tobago</option>
+                  <option>Tunisia</option>
+                  <option>Türkiye</option>
+                  <option>Turkmenistan</option>
+                  <option>Uganda</option>
+                  <option>Ukraine</option>
+                  <option>United Arab Emirates</option>
+                  <option>United Kingdom</option>
+                  <option>United States</option>
+                  <option>Uruguay</option>
+                  <option>Uzbekistan</option>
+                  <option>Vanuatu</option>
+                  <option>Venezuela</option>
+                  <option>Vietnam</option>
+                  <option>Yemen</option>
+                  <option>Zambia</option>
+                  <option>Zimbabwe</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="role">I am a <span class="req">*</span></label>
+                <select id="role" name="role" required>
+                  <option value="">Select one</option>
+                  <option>Buyer</option>
+                  <option>Seller / Supplier</option>
+                  <option>Mandate</option>
+                  <option>Investor / Partner</option>
+                  <option>Solar &amp; EV client</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label for="commodity">Commodity of interest <span class="req">*</span></label>
+              <select id="commodity" name="commodity" required>
+                <option value="">Select a product group</option>
+                <option>Diesel &amp; gas oils</option>
+                <option>Aviation fuels</option>
+                <option>Gasoline</option>
+                <option>Fuel oils &amp; crude</option>
+                <option>Specialty products (bitumen, naphtha, base oils, pet coke)</option>
+                <option>Fertilizers</option>
+                <option>Precious &amp; rare earth minerals</option>
+                <option>Solar &amp; EV</option>
+                <option>Other</option>
+              </select>
+            </div>
+
+            <div id="trade-fields" class="form" hidden>
+              <div class="form-row">
+                <div class="field">
+                  <label for="quantity">Quantity and unit</label>
+                  <div class="qty">
+                    <input id="quantity" name="quantity" type="number" min="0" step="any" placeholder="Quantity">
+                    <select id="unit" name="unit" aria-label="Unit">
+                      <option>MT</option>
+                      <option>barrels</option>
+                      <option>litres</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="field" id="port-field">
+                  <label for="port">Destination port</label>
+                  <input id="port" name="port" type="text">
+                </div>
+              </div>
+              <div class="field">
+                <label for="terms">Delivery terms <span class="hint">(optional)</span></label>
+                <select id="terms" name="terms">
+                  <option value="">Select</option>
+                  <option>FOB</option>
+                  <option>CIF</option>
+                  <option>CFR</option>
+                  <option>DAP</option>
+                  <option>Not sure</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="message">Message <span class="req">*</span></label>
+              <textarea id="message" name="message" required></textarea>
+            </div>
+            <div class="field">
+              <label for="document">Supporting document <span class="hint">(optional: LOI, ICPO or company profile, PDF up to 5 MB)</span></label>
+              <input id="document" name="document" type="file" accept="application/pdf,.pdf">
+            </div>
+
+            <div class="hp" aria-hidden="true">
+              <label for="extra_info">Leave this field empty</label>
+              <input id="extra_info" name="extra_info" type="text" tabindex="-1" autocomplete="off">
+            </div>
+
+            <div id="form-status" role="status" aria-live="polite" hidden></div>
+            <div>
+              <button class="btn btn--gold" type="submit" id="submit-btn">Submit Inquiry</button>
+            </div>
+            <p class="small muted">We use the details you send only to respond to your inquiry. See our <a href="privacy.html">Privacy Policy</a>.</p>
+          </form>
+        </div>
+
+        <aside class="contact-panel">
+          <div>
+            <h3>Office</h3>
+            <address>
+              No. 4 Nii Boi Maclean Street<br>
+              off Dansoman Road<br>
+              Accra, Ghana<br>
+              <span class="small">P.O. Box CT 2016, Cantonments, Accra</span>
+            </address>
+          </div>
+          <div>
+            <h3>Phone / WhatsApp</h3>
+            <p><a href="tel:+233244239557">+233 24 423 9557</a></p>
+            <div class="btn-row" style="margin-top: 12px">
+              <a class="btn btn--dark" href="https://wa.me/233244239557?text=Hello%20Jabo%20%26%20Associates%2C%20I%20would%20like%20to%20make%20an%20inquiry." target="_blank" rel="noopener">Chat on WhatsApp</a>
+            </div>
+          </div>
+          <div>
+            <h3>Email</h3>
+            <p><a href="mailto:info@jaboassociates.business">info@jaboassociates.business</a></p>
+          </div>
+          <!-- Add an "Office hours" block here once the client confirms them. -->
+        </aside>
+      </div>
+    </section>
+
+    <section class="section section--cream" style="padding-top: 0">
+      <div class="container" style="padding-top: clamp(40px, 6vw, 72px)">
+        <iframe class="map" title="Map of the Jabo &amp; Associates office in Dansoman, Accra" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=No.%204%20Nii%20Boi%20Maclean%20Street%2C%20Dansoman%2C%20Accra%2C%20Ghana&amp;output=embed"></iframe>
+      </div>
+    </section>
+  </main>
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <div class="logo-tile"><img src="images/logo-mark.webp" alt="" width="48" height="48"></div>
+          <div class="brand-text">
+            <span class="brand-name">Jabo &amp; Associates</span>
+            <span class="brand-tag">Minerals | Petroleum | Green Energy</span>
+          </div>
+        </div>
+        <p style="max-width: 380px">
+          A Ghana-registered company trading in petroleum products, precious and rare earth minerals, fertilizers, solar energy and electric vehicles, and building a transparent commodities exchange for Africa.
+        </p>
+      </div>
+      <div>
+        <h4>Quick links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="team.html">Team</a></li>
+          <li><a href="products.html">Commodities</a></li>
+          <li><a href="exchange.html">Exchange</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="solar-ev.html">Solar &amp; EVs</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <address>
+          <span>No. 4 Nii Boi Maclean Street, off Dansoman Road, Accra, Ghana</span>
+          <span>P.O. Box CT 2016, Cantonments, Accra</span>
+          <a href="tel:+233244239557">+233 24 423 9557</a>
+          <a href="mailto:info@jaboassociates.business">info@jaboassociates.business</a>
+          <a href="https://wa.me/233244239557?text=Hello%20Jabo%20%26%20Associates%2C%20I%20would%20like%20to%20make%20an%20inquiry." target="_blank" rel="noopener">Chat on WhatsApp</a>
+        </address>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; <span id="year">2026</span> Jabo &amp; Associates Company Limited. Company registration no. CS201151021.</span>
+      <ul>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms of Use</a></li>
+        <li><a href="disclaimer.html">Trade Disclaimer</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+  <a class="wa-float" href="https://wa.me/233244239557?text=Hello%20Jabo%20%26%20Associates%2C%20I%20would%20like%20to%20make%20an%20inquiry." target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp">
+    <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16.02 3C8.83 3 3 8.83 3 16.02c0 2.3.6 4.55 1.75 6.53L3 29l6.62-1.73a13 13 0 0 0 6.4 1.64h.01C23.2 28.91 29 23.08 29 15.9 29 12.5 27.67 9.3 25.26 6.9A12.9 12.9 0 0 0 16.02 3Zm0 23.7h-.01a10.8 10.8 0 0 1-5.5-1.5l-.4-.23-3.93 1.03 1.05-3.83-.26-.4a10.7 10.7 0 0 1-1.65-5.75c0-5.95 4.85-10.8 10.82-10.8 2.88 0 5.6 1.13 7.63 3.17a10.7 10.7 0 0 1 3.16 7.64c0 5.96-4.86 10.67-10.9 10.67Zm5.93-8.1c-.33-.16-1.93-.95-2.23-1.06-.3-.11-.52-.16-.74.17-.22.32-.85 1.06-1.04 1.28-.19.22-.38.24-.7.08-.33-.16-1.38-.51-2.63-1.62-.97-.87-1.63-1.94-1.82-2.27-.19-.33-.02-.5.14-.66.15-.15.33-.38.49-.57.16-.19.22-.33.33-.55.11-.22.05-.41-.03-.57-.08-.16-.74-1.78-1.01-2.44-.27-.64-.54-.55-.74-.56h-.63c-.22 0-.57.08-.87.41-.3.33-1.14 1.11-1.14 2.72 0 1.6 1.17 3.15 1.33 3.37.16.22 2.3 3.5 5.56 4.91.78.33 1.38.53 1.85.68.78.25 1.49.21 2.05.13.63-.09 1.93-.79 2.2-1.55.27-.76.27-1.41.19-1.55-.08-.14-.3-.22-.63-.38Z"/></svg>
+  </a>
+</body>
+</html>

@@ -1,0 +1,6 @@
+# Only the form handler may be requested from the web; config, logs and rate-limit data stay private.
+# (Apache 2.4 syntax. Other servers: see docs/DEPLOYMENT-RUNBOOK.md.)
+Require all denied
+<Files "inquiry.php">
+    Require all granted
+</Files>

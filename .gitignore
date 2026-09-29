@@ -1,0 +1,7 @@
+node_modules
+source-assets/
+
+# form handler: private settings and runtime data
+site/api/config.php
+site/api/outbox/
+site/api/rate/
