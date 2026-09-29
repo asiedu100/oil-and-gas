@@ -1,0 +1,58 @@
+# Netlify reads this automatically. It fixes the two most common reasons a Netlify deploy of
+# this repo shows nothing: the site's actual files live in site/, not the repo root, and Netlify
+# needs to be told that explicitly regardless of what the dashboard's "Publish directory" says.
+#
+# NOTE: Netlify only serves static files. site/api/inquiry.php (the inquiry form's PHP handler)
+# will NOT run here -- see docs/DEPLOYMENT-RUNBOOK.md, "Track C: static-only host" for the two
+# options (a form service, or porting the handler to a Netlify Function).
+
+[build]
+  publish = "site"
+  # No build command: this is plain HTML/CSS/JS with no build step.
+
+# The PHP form handler cannot run on Netlify (see the note above). Its source is not a secret --
+# config.php, the only file with real settings, is never uploaded -- but serving it as readable
+# PHP source is still untidy, so block the folder entirely until the form is switched to a form
+# service or a Netlify Function (docs/DEPLOYMENT-RUNBOOK.md, Track C).
+[[redirects]]
+  from = "/api/*"
+  to = "/404.html"
+  status = 404
+
+# www -> bare domain, matching the canonical URLs already used throughout the site.
+[[redirects]]
+  from = "https://www.jaboassociates.business/*"
+  to = "https://jaboassociates.business/:splat"
+  status = 301
+  force = true
+
+# Security headers, equivalent to the ones site/.htaccess sets for Apache hosts.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "DENY"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+# Caching, equivalent to site/.htaccess's mod_expires rules. Give a replaced image a new file
+# name, since these are cached for 30 days.
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"

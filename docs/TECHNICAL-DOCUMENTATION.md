@@ -54,6 +54,7 @@ oil/
 │   └── images/                   webp photos, logo-mark.webp, favicon-16/32.png, apple-touch-icon.png, og.jpg, team/
 ├── tools/optimize-image.py       turns a photo into site-ready webp files
 ├── docs/                         this documentation
+├── netlify.toml                  only read if deployed to Netlify (Track C); ignored otherwise
 ├── .gitignore
 └── (original photos)             loose JPEGs in the project root: source material, not published
 ```

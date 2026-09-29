@@ -28,7 +28,7 @@ Where a step depends on a dashboard (hosting panel, registrar, email provider), 
 |---|---|---|---|
 | **A: shared hosting / cPanel** | Typical paid web hosting with PHP and email | `site/api/inquiry.php` as is | Tested locally; recommended |
 | **B: your own server (VPS)** | Ubuntu or similar with Apache or Nginx and PHP-FPM | `site/api/inquiry.php` with server rules | Apache rules tested; Nginx snippet untested |
-| **C: static-only host** (Netlify, Vercel, GitHub Pages and similar) | No PHP | A form service, or a port of the handler to that host's functions | Needs a small change (section 5) |
+| **C: static-only host** (Netlify, Vercel, GitHub Pages and similar) | No PHP | A form service, or a port of the handler to that host's functions | `netlify.toml` is in the repo (publish directory, headers, redirects); the form itself still needs Option 1 or 2 in section 5 before it will work |
 
 If you have no strong preference, pick a Track A host. It needs the least setup and is what the code was tested against.
 
@@ -164,18 +164,26 @@ server {
 
 ## 5. Track C: static-only host (no PHP)
 
-Netlify, Vercel, GitHub Pages and similar serve the pages perfectly, but they cannot run `inquiry.php` (its source would be downloadable as text; it holds no secrets because `config.php` is never uploaded). The form needs one of:
+Netlify, Vercel, GitHub Pages and similar serve the pages perfectly, but they cannot run `inquiry.php` (its source would be downloadable as text; it holds no secrets because `config.php` is never uploaded, but `netlify.toml` blocks the whole `api/` folder anyway, tidily). The form needs one of:
 
 **Option 1: a form service** (Formspree, Web3Forms, Getform and similar; no code):
 1. Create a form in the service and copy its endpoint URL.
 2. In `site/contact.html`, change `action="api/inquiry.php"` to that URL.
 3. The page script already sends the request with `Accept: application/json`, treats an HTTP success as delivered, and shows the service's `error` or `message` text if it fails. Check the service's documentation for its own spam field and settings.
 4. Limits to check before choosing: PDF attachments often need a paid plan; the service's own validation replaces the server checks (role list, phone format, PDF signature); the honeypot field name here is `extra_info`, which the service may not recognise, so use the service's spam protection.
-5. Delete `site/api/` from what you upload.
 
-**Option 2: port the handler** to the host's functions (Netlify Functions, Vercel Functions). The logic is short (validation, honeypot, timing check, PDF check, send through the Resend API) and can be ported from `inquiry.php`; ask for this to be done once the host is chosen.
+**Option 2: port the handler** to the host's functions (Netlify Functions, Vercel Functions). The logic is short (validation, honeypot, timing check, PDF check, send through the Resend API) and can be ported from `inquiry.php`; ask for this to be done once you've decided against Option 1.
 
-Headers and caching on these hosts are set in their own files (Netlify: `_headers`; Vercel: `vercel.json`); the content in `site/.htaccess` shows the values to use. **Not tested here.**
+### 5.1 Deploying this repo to Netlify specifically
+
+`netlify.toml` is already in the repo root and Netlify reads it automatically — you should not need to set anything by hand in the dashboard.
+
+1. Netlify dashboard, **Add new site**, then **Import an existing project**, and connect the `oil-and-gas` GitHub repository.
+2. **Branch to deploy:** this repo's only branch is `develop` (not `main`). Set Netlify's "Production branch" to `develop` — if the site was created before this was set correctly, open **Site configuration → Build & deploy → Branches** and fix it there; that alone is the most common reason a push doesn't appear to deploy at all.
+3. Build settings: Netlify should read `publish = "site"` and no build command from `netlify.toml` automatically. If the dashboard shows a different publish directory (for example blank, or `.`), override it to `site` and redeploy.
+4. Deploy. `netlify.toml` also sets the security headers, image/font/CSS/JS caching, and the `www` → bare-domain redirect equivalent to what `site/.htaccess` does for Apache (tested by validating the file's structure; not deployed and checked live here).
+5. Connect the domain: **Domain settings**, add `jaboassociates.business`, and follow Netlify's DNS instructions (it can manage DNS for you, or give you records to add at your registrar). Netlify issues the HTTPS certificate automatically once DNS points to it.
+6. Do Option 1 or 2 above before relying on the contact form — it will not work until one of them is done.
 
 ## 6. Point the domain
 
