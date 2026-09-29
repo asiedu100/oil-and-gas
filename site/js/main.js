@@ -10,10 +10,6 @@ if (menuToggle && siteNav) {
   });
 }
 
-// Footer year
-const year = document.querySelector('#year');
-if (year) year.textContent = new Date().getFullYear();
-
 // Team bio dialogs
 document.querySelectorAll('[data-bio]').forEach((btn) => {
   btn.addEventListener('click', () => {
