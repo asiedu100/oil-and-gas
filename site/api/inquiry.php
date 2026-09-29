@@ -10,6 +10,11 @@ ini_set('display_errors', '0');
 
 const MAX_PDF = 5 * 1024 * 1024;
 const ROLES = ['Buyer', 'Seller / Supplier', 'Mandate', 'Investor / Partner', 'Solar & EV client'];
+const COMMODITIES = [
+    'Diesel & gas oils', 'Aviation fuels', 'Gasoline', 'Fuel oils & crude',
+    'Specialty products (bitumen, naphtha, base oils, pet coke)', 'Fertilizers',
+    'Precious & rare earth minerals', 'Solar & EV', 'Other',
+];
 
 function respond($status, $body)
 {
@@ -78,50 +83,93 @@ function post($key, $max = 200, $multiline = false)
     return clean(isset($_POST[$key]) ? $_POST[$key] : '', $max, $multiline);
 }
 
-// Allow at most rate_limit inquiries per visitor address in rate_window seconds.
-function rate_limited($cfg)
+// Creates $dir if needed. Treats "another request just created it" as success too, so two
+// requests arriving at the same instant on a fresh deploy don't race each other into different
+// fallback directories (mkdir() returns false, not true, when the target already exists).
+function ensure_dir($dir)
+{
+    return is_dir($dir) || @mkdir($dir, 0750, true) || is_dir($dir);
+}
+
+function rate_dir()
+{
+    $dir = __DIR__ . '/rate';
+    if (ensure_dir($dir)) {
+        return $dir;
+    }
+    $dir = sys_get_temp_dir() . '/jabo-rate';
+    return ensure_dir($dir) ? $dir : false;
+}
+
+function rate_file($cfg)
+{
+    $dir = rate_dir();
+    if ($dir === false) {
+        return false;
+    }
+    $ip = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'unknown';
+    return $dir . '/' . sha1($ip) . '.json';
+}
+
+function recent_hits($fh, $window)
+{
+    $now = time();
+    $times = json_decode((string) stream_get_contents($fh), true);
+    return is_array($times) ? array_values(array_filter($times, function ($t) use ($now, $window) {
+        return $t > $now - $window;
+    })) : [];
+}
+
+// Cheap, read-only: has this visitor address already hit the limit? Checked early, before any
+// expensive validation or file handling, so an already-limited visitor is rejected fast.
+function rate_limit_reached($cfg)
 {
     $limit = (int) $cfg['rate_limit'];
     if ($limit <= 0) {
         return false;
     }
-    $dir = __DIR__ . '/rate';
-    if (!is_dir($dir) && !@mkdir($dir, 0750, true)) {
-        $dir = sys_get_temp_dir() . '/jabo-rate';
-        if (!is_dir($dir) && !@mkdir($dir, 0750, true)) {
-            return false;
-        }
-    }
-    $ip = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'unknown';
-    $path = $dir . '/' . sha1($ip) . '.json';
-    $now = time();
-    $window = (int) $cfg['rate_window'];
-    $fh = @fopen($path, 'c+');
+    $path = rate_file($cfg);
+    $fh = $path !== false ? @fopen($path, 'c+') : false;
     if (!$fh) {
         return false;
     }
-    flock($fh, LOCK_EX);
-    $times = json_decode((string) stream_get_contents($fh), true);
-    $times = is_array($times) ? array_values(array_filter($times, function ($t) use ($now, $window) {
-        return $t > $now - $window;
-    })) : [];
-    $blocked = count($times) >= $limit;
-    if (!$blocked) {
-        $times[] = $now;
+    flock($fh, LOCK_SH);
+    $reached = count(recent_hits($fh, (int) $cfg['rate_window'])) >= $limit;
+    flock($fh, LOCK_UN);
+    fclose($fh);
+    return $reached;
+}
+
+// Records one inquiry against the visitor's address. Called only after the inquiry has actually
+// been sent, so a mistyped field or a failed send never consumes part of the allowance.
+function record_rate_hit($cfg)
+{
+    $limit = (int) $cfg['rate_limit'];
+    if ($limit <= 0) {
+        return;
     }
+    $path = rate_file($cfg);
+    $fh = $path !== false ? @fopen($path, 'c+') : false;
+    if (!$fh) {
+        return;
+    }
+    flock($fh, LOCK_EX);
+    $window = (int) $cfg['rate_window'];
+    $now = time();
+    $times = recent_hits($fh, $window);
+    $times[] = $now;
     ftruncate($fh, 0);
     rewind($fh);
     fwrite($fh, json_encode($times));
     flock($fh, LOCK_UN);
     fclose($fh);
     if (mt_rand(1, 50) === 1) {
-        foreach ((array) glob($dir . '/*.json') as $old) {
+        foreach ((array) glob(dirname($path) . '/*.json') as $old) {
             if (@filemtime($old) < $now - 2 * $window) {
                 @unlink($old);
             }
         }
     }
-    return $blocked;
 }
 
 function http_post_json($url, array $headers, $json)
@@ -225,7 +273,7 @@ function send_inquiry($cfg, $subject, $replyTo, $text, $html, $attachment)
     if ($driver === 'log') {
         // Local testing only: writes the email to api/outbox instead of sending it.
         $dir = __DIR__ . '/outbox';
-        if (!is_dir($dir) && !@mkdir($dir, 0750, true)) {
+        if (!ensure_dir($dir)) {
             return false;
         }
         $file = $dir . '/' . date('Ymd-His') . '-' . bin2hex(random_bytes(3)) . '.eml';
@@ -260,6 +308,13 @@ if ($elapsed < (float) $cfg['min_seconds']) {
     respond(400, ['error' => 'Please take a moment to review your inquiry, then submit it again.']);
 }
 
+// Spam check 3: limit how often one visitor address can send inquiries. Checked here, cheaply,
+// before any field validation or file handling, so an already-limited visitor is rejected before
+// the server does any real work (in particular, before it would otherwise read an attached PDF).
+if (rate_limit_reached($cfg)) {
+    respond(429, ['error' => 'Too many inquiries from your connection. Please try again later.']);
+}
+
 $d = [
     'name' => post('name'),
     'company' => post('company'),
@@ -289,6 +344,9 @@ if (!preg_match('/^\+[0-9 ()\-]{7,}$/', $d['phone'])) {
 if (!in_array($d['role'], ROLES, true)) {
     respond(400, ['error' => 'Please choose who you are.']);
 }
+if (!in_array($d['commodity'], COMMODITIES, true)) {
+    respond(400, ['error' => 'Please choose a commodity of interest.']);
+}
 
 $attachment = null;
 if (isset($_FILES['document']) && $_FILES['document']['error'] !== UPLOAD_ERR_NO_FILE) {
@@ -299,18 +357,29 @@ if (isset($_FILES['document']) && $_FILES['document']['error'] !== UPLOAD_ERR_NO
     if ($file['error'] !== UPLOAD_ERR_OK || !is_uploaded_file($file['tmp_name'])) {
         respond(400, ['error' => 'The document could not be uploaded. Please try again.']);
     }
-    $data = file_get_contents($file['tmp_name']);
-    if ($data === false || substr($data, 0, 4) !== '%PDF') {
+    // Check the 4-byte signature before reading the whole (up to 5 MB) file, so a file that
+    // merely has a .pdf name but isn't one is rejected without buffering it into memory first.
+    $fh = @fopen($file['tmp_name'], 'rb');
+    if (!$fh || fread($fh, 4) !== '%PDF') {
+        if ($fh) {
+            fclose($fh);
+        }
         respond(400, ['error' => 'The document must be a PDF.']);
     }
-    $name = preg_replace('/[^\w.\- ]/', '_', basename($file['name']));
-    $attachment = ['name' => substr($name, 0, 80) ?: 'document.pdf', 'data' => $data];
-}
-
-// Spam check 3: limit how often one visitor address can send inquiries. Only inquiries that
-// would actually be emailed count, so a visitor who mistypes a field is never locked out.
-if (rate_limited($cfg)) {
-    respond(429, ['error' => 'Too many inquiries from your connection. Please try again later.']);
+    rewind($fh);
+    $data = stream_get_contents($fh);
+    fclose($fh);
+    if ($data === false) {
+        respond(400, ['error' => 'The document could not be read. Please try again.']);
+    }
+    $rawName = basename($file['name']);
+    // Keep non-ASCII names (e.g. a CJK filename) intact when they're valid UTF-8; otherwise fall
+    // back to plain byte-level cleanup so an invalid filename can't produce a null result.
+    $name = preg_match('//u', $rawName)
+        ? preg_replace('/[^\w.\- ]/u', '_', $rawName)
+        : preg_replace('/[^\w.\- ]/', '_', $rawName);
+    $name = substr((string) $name, 0, 80);
+    $attachment = ['name' => $name !== '' ? $name : 'document.pdf', 'data' => $data];
 }
 
 $rows = [
@@ -353,4 +422,7 @@ try {
 if (!$sent) {
     respond(502, ['error' => 'We could not send your inquiry right now.']);
 }
+// Only a successful send counts against the rate limit, so a mail outage never locks out a
+// visitor who is simply retrying after being told their inquiry could not be sent.
+record_rate_hit($cfg);
 respond(200, ['ok' => true]);

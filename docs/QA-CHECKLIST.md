@@ -43,6 +43,23 @@ Automated checks in headless Chromium against the local site, at 1366×850 (desk
 
 **Not yet tested:** real email delivery on the chosen host (and whether it lands in the inbox), Nginx and static-host configurations, the Google Map, Firefox, Safari, real phones, Lighthouse and accessibility audits, screen readers, keyboard-only walkthrough, slow networks, the live domain.
 
+## 2a. Bug-fix verification (29 September 2026)
+
+A full code-review pass found several concrete, reproducible bugs, all fixed the same day. Each fix was verified against the actual failure it corrected, not just re-run against the existing suite.
+
+| Check | Result |
+|---|---|
+| Commodity now rejected server-side if it isn't one of the 9 dropdown options (previously unchecked, unlike role) | ☑ |
+| Attachment named with a CJK filename (`合同.pdf`) arrives with the name intact, not mangled into underscores | ☑ |
+| Attachment whose sanitised name is exactly `0` arrives as `0`, not silently renamed to `document.pdf` | ☑ |
+| A rate-limited visitor with an oversized/invalid attachment gets the 429 message immediately, proving the rate check now runs before file handling | ☑ |
+| Four submissions that fail to send (deliberately broken mail config) all return the send-failure message, never "Too many inquiries" — and a real send afterward still succeeds, proving failed sends no longer consume the rate-limit quota | ☑ |
+| `.htaccess` re-tested on a simulated host granting `FileInfo` but withholding `Limit` (a real, plausible cPanel configuration): before the fix, this made the entire `api/` directory return 500, including `inquiry.php` itself; after the fix, `inquiry.php` responds normally and `config.php`, `config.example.php`, `rate/`, `outbox/` and `.htaccess` are all still refused with 403, with zero 500s anywhere on the site | ☑ |
+| Same scenario re-tested with full `AllowOverride All` (the common case): no regressions — all redirects, headers, the branded 404, the `/.well-known/` exemption and the private-file blocks behave exactly as before | ☑ |
+| `products.html`'s "Request a Quote" button (below the full table) now links to a plain, unfilled `contact.html` instead of pre-filling one of the five product groups shown above it | ☑ |
+| `tools/optimize-image.py`: an absolute `name`, a malformed `--crop` (wrong count, zero-size box, non-numeric), and a malformed `--widths` (empty, non-numeric, trailing comma) each now fail with a clear message instead of a raw traceback or a silently wrong output location; normal usage unaffected | ☑ |
+| Full 12-page × 2-viewport regression re-run after all fixes: no console errors, no failed requests, no horizontal overflow | ☑ |
+
 ## 3. Navigation and content
 
 | ID | Check | Result |

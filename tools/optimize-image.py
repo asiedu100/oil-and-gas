@@ -29,17 +29,32 @@ def main():
     ap.add_argument("--out", default=str(ROOT / "site" / "images"), help="Output folder (default site/images)")
     args = ap.parse_args()
 
+    if Path(args.name).is_absolute():
+        ap.error(f"name must be relative to --out (e.g. 'hero-port' or 'team/kwabena'), not {args.name!r}")
+
     img = Image.open(args.source).convert("RGB")
     if args.crop:
-        left, top, right, bottom = (int(v) for v in args.crop.split(","))
+        parts = args.crop.split(",")
+        if len(parts) != 4 or not all(p.strip().lstrip("-").isdigit() for p in parts):
+            ap.error(f"--crop needs exactly 4 numbers as left,top,right,bottom, got {args.crop!r}")
+        left, top, right, bottom = (int(v) for v in parts)
+        if right <= left or bottom <= top:
+            ap.error(f"--crop box has zero or negative size: left={left}, top={top}, right={right}, bottom={bottom}")
         img = img.crop((left, top, right, bottom))
     img.thumbnail((2400, 2400), Image.LANCZOS)
 
     out_dir = Path(args.out)
     (out_dir / Path(args.name).parent).mkdir(parents=True, exist_ok=True)
 
+    try:
+        widths = sorted({int(x) for x in args.widths.split(",") if x.strip()})
+    except ValueError:
+        ap.error(f"--widths must be a comma-separated list of whole numbers, got {args.widths!r}")
+    if not widths or any(w <= 0 for w in widths):
+        ap.error(f"--widths must contain at least one positive number, got {args.widths!r}")
+
     written = []
-    for w in sorted({int(x) for x in args.widths.split(",")}):
+    for w in widths:
         w = min(w, img.width)
         h = round(img.height * w / img.width)
         path = out_dir / f"{args.name}-{w}.webp"

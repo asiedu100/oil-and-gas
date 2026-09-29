@@ -1,6 +1,17 @@
-# Only the form handler may be requested from the web; config, logs and rate-limit data stay private.
-# (Apache 2.4 syntax. Other servers: see docs/DEPLOYMENT-RUNBOOK.md.)
-Require all denied
-<Files "inquiry.php">
-    Require all granted
-</Files>
+# Only the form handler may be requested from the web; config, logs and rate-limit data stay
+# private. The root site/.htaccess already blocks these by name (config.php, config.example.php,
+# rate/, outbox/) and hides dotfiles, so this file is a second, independent layer in case this
+# directory is ever served under a different document root.
+#
+# Uses mod_rewrite rather than "Require": Require needs the AllowOverride "Limit" setting, which
+# is not otherwise needed anywhere in this project and can be missing on a host even when
+# everything else works. When that happens, "Require" inside .htaccess is not simply ignored --
+# it makes Apache return a 500 error for every request in this directory, including legitimate
+# ones, which would silently break the contact form in production. mod_rewrite only needs
+# "FileInfo", which the root site/.htaccess's redirects already require, so if this rule has no
+# effect, the site is visibly broken in an obvious way instead.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_URI} !/inquiry\.php$
+    RewriteRule ^ - [F,L]
+</IfModule>

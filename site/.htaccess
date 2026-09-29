@@ -6,6 +6,17 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
+    # Block dotfiles (.htaccess, .user.ini, ...) and the form handler's private files, using
+    # mod_rewrite rather than "Require". FileInfo (needed for every RewriteRule in this file) is
+    # already required for the redirects below to work at all, so if this blocks nothing, the
+    # site is visibly broken in an obvious way. "Require" instead needs a separate AllowOverride
+    # bucket (Limit) that isn't otherwise needed anywhere in this file, and on a host that doesn't
+    # grant it, "Require" inside .htaccess doesn't get silently skipped: it makes Apache return a
+    # 500 error for every request on the whole site.
+    RewriteCond %{REQUEST_URI} !^/\.well-known/(acme-challenge|pki-validation)/
+    RewriteRule (^|/)\. - [F,L]
+    RewriteRule ^api/(config\.php|config\.example\.php|rate/|outbox/) - [F,L]
+
     # Certificate authorities check /.well-known/ over plain HTTP; never redirect those requests.
     RewriteCond %{REQUEST_URI} !^/\.well-known/(acme-challenge|pki-validation)/
     RewriteCond %{HTTP_HOST} ^(www\.)?jaboassociates\.business$ [NC]
@@ -21,11 +32,8 @@
 # 2. Branded not-found page
 ErrorDocument 404 /404.html
 
-# 3. No folder listings; hide dotfiles such as .htaccess (but not /.well-known/, used for certificates)
+# 3. No folder listings (dotfiles are hidden by the mod_rewrite block above)
 Options -Indexes
-<FilesMatch "^\.(?!well-known$)">
-    Require all denied
-</FilesMatch>
 
 # 4. Security headers
 <IfModule mod_headers.c>
