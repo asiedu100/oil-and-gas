@@ -166,11 +166,12 @@ server {
 
 Netlify, Vercel, GitHub Pages and similar serve the pages perfectly, but they cannot run `inquiry.php` (its source would be downloadable as text; it holds no secrets because `config.php` is never uploaded, but `netlify.toml` blocks the whole `api/` folder anyway, tidily). The form needs one of:
 
-**Option 1: a form service** (Formspree, Web3Forms, Getform and similar; no code):
-1. Create a form in the service and copy its endpoint URL.
-2. In `site/contact.html`, change `action="api/inquiry.php"` to that URL.
-3. The page script already sends the request with `Accept: application/json`, treats an HTTP success as delivered, and shows the service's `error` or `message` text if it fails. Check the service's documentation for its own spam field and settings.
-4. Limits to check before choosing: PDF attachments often need a paid plan; the service's own validation replaces the server checks (role list, phone format, PDF signature); the honeypot field name here is `extra_info`, which the service may not recognise, so use the service's spam protection.
+**Option 1: a form service** (Formspree, Web3Forms, Getform and similar; no code) — chosen for this project:
+1. Sign up at the chosen service and create a form. Formspree: **Add Form**, give it a name (e.g. "Jabo & Associates inquiries"), set the destination to the real inquiry inbox, and copy the endpoint it gives you (`https://formspree.io/f/YOUR_FORM_ID`).
+2. In `site/contact.html`, find the `<form id="inquiry-form" ...>` tag (an HTML comment sits right above it) and change `action="api/inquiry.php"` to that endpoint.
+3. Nothing else needs to change: `contact.js` already sends the request with `Accept: application/json`, treats an HTTP success as delivered, and reads the error text whether the service returns it as `{ "error": "..." }`, `{ "message": "..." }` or Formspree's own `{ "errors": [{ "message": "..." }] }`. The page already carries a `_gotcha` hidden field, which is Formspree's honeypot convention, alongside the one `inquiry.php` uses — both are harmless no-ops to whichever backend doesn't recognise them.
+4. Confirm your plan supports file uploads before relying on the "Supporting document" field — this varies by service and plan, and if it isn't supported the field should be removed from `contact.html` (ask for this to be done, since it also needs the accompanying `<label>` and PDF-check code in `contact.js` removed) rather than left in place silently failing.
+5. Verify the destination email in Formspree's dashboard (it sends a confirmation link the first time) and send a real test inquiry once live.
 
 **Option 2: port the handler** to the host's functions (Netlify Functions, Vercel Functions). The logic is short (validation, honeypot, timing check, PDF check, send through the Resend API) and can be ported from `inquiry.php`; ask for this to be done once you've decided against Option 1.
 

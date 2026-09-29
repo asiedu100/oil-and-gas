@@ -67,6 +67,10 @@
     <section class="section">
       <div class="container contact-layout">
         <div>
+          <!-- On a PHP host (Track A/B), leave action="api/inquiry.php" as is.
+               On Netlify or another static-only host (Track C), replace it with your form
+               service's endpoint (Formspree: https://formspree.io/f/YOUR_FORM_ID) — see
+               docs/DEPLOYMENT-RUNBOOK.md, Track C, Option 1. -->
           <form class="form" id="inquiry-form" method="post" action="api/inquiry.php" enctype="multipart/form-data" novalidate>
             <div class="form-row">
               <div class="field">
@@ -355,6 +359,9 @@
             <div class="hp" aria-hidden="true">
               <label for="extra_info">Leave this field empty</label>
               <input id="extra_info" name="extra_info" type="text" tabindex="-1" autocomplete="off">
+              <!-- Formspree's own honeypot convention; harmless extra field when api/inquiry.php
+                   handles the form instead, which only reads fields it knows by name. -->
+              <input name="_gotcha" type="text" tabindex="-1" autocomplete="off">
             </div>
 
             <div id="form-status" role="status" aria-live="polite" hidden></div>

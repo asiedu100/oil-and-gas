@@ -113,7 +113,7 @@ Priority: **M** = must, **S** = should, **C** = could. Status: **Built**, **Pend
 |---|---|---|---|
 | FR-20 | Fields: full name, company, country (dropdown), email, phone or WhatsApp with country code, "I am a" (Buyer, Seller / Supplier, Mandate, Investor / Partner, Solar & EV client), commodity of interest (product groups plus Other), message | M | Built |
 | FR-21 | Quantity, unit (MT, barrels, litres) and delivery terms (FOB, CIF, CFR, DAP, Not sure) appear only for Buyer or Seller; destination port appears only for Buyer | M | Built |
-| FR-22 | Optional supporting document: PDF only, up to 5 MB (LOI, ICPO or company profile) | M | Built |
+| FR-22 | Optional supporting document: PDF only, up to 5 MB (LOI, ICPO or company profile) | M | Built for the PHP handler. On Netlify (using Formspree, see `DEPLOYMENT-RUNBOOK.md` Track C), this depends on the Formspree plan supporting file uploads — confirm before launch |
 | FR-23 | Browser validation for required fields, email format, and international phone format; PDF type and size checked before upload | M | Built |
 | FR-24 | The same validation is repeated on the server, including a check that the file really is a PDF | M | Built |
 | FR-25 | A valid submission is emailed to the company inbox, with the visitor's email as reply-to, the details in a table and the PDF attached | M | Built; needs the host's mail settings in `config.php` to work live |
@@ -221,7 +221,7 @@ These come from the client brief and the risk review. They apply to every future
 
 **Waiting on the client:** company email, office hours, licences held, photo of Kwabena Nyarko Twumasi, logo source file, confirmation of the numbers strip, mineral list, finance model wording, social responsibility projects, confirmation of the two trading-partner names and permission to name them publicly, which legal name to use (certificate vs. website), approval of the content changes.
 
-**Before launch:** choose a host; upload the site, create the form settings and mailboxes; connect the domain and DNS; lawyer review of legal pages and Exchange wording; full QA pass (see `QA-CHECKLIST.md`); submit to Search Console.
+**Before launch:** deploy to Netlify; get a Formspree account and endpoint and update `contact.html`; connect the domain and DNS; lawyer review of legal pages and Exchange wording; full QA pass (see `QA-CHECKLIST.md`); submit to Search Console.
 
 **Decision needed:** automatic WhatsApp notification (FR-28) is not in the current build.
 
@@ -241,7 +241,7 @@ Buyer accounts and deal tracking, live prices, exchange functionality, payments,
 
 ## 17. Open questions
 
-1. Which hosting provider will be used? (It needs PHP, HTTPS and email; see `DEPLOYMENT-RUNBOOK.md`.)
+1. ~~Which hosting provider will be used?~~ Decided: Netlify, with Formspree for the inquiry form (see `DEPLOYMENT-RUNBOOK.md`, Track C). Still open: the Formspree endpoint, and whether its plan supports file uploads (`CLIENT-APPROVALS.md`, decision 8).
 2. Which email address should receive inquiries, and who hosts the company email?
 3. Is jaboassociates.business the only domain, and who controls its DNS?
 4. Does the company provide finance directly or through partner banks?

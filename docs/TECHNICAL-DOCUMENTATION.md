@@ -327,6 +327,7 @@ The page has no JavaScript-free fallback for the form: without JavaScript the fo
 | `message` | Yes | Up to 5000 characters |
 | `document` | No | PDF up to 5 MB |
 | `extra_info` | n/a | Honeypot; must stay empty |
+| `_gotcha` | n/a | Formspree's honeypot convention; also checked by `inquiry.php` as a bonus. Must stay empty |
 | `elapsed` | Added by the page script | Milliseconds on the page; used for the timing check |
 
 **Email received by the company:** subject `New inquiry: <role> / <commodity> / <company>`, a table of the details, then the message, with the PDF attached.
@@ -442,4 +443,7 @@ Written for current versions of Chrome, Edge, Firefox and Safari. The site uses 
 | 2026-09-29 | `site/products.html`: the "Request a Quote" button under the full petroleum table no longer pre-fills "Diesel & gas oils" | The table lists five different product groups; pre-filling one of them regardless of which the visitor actually wanted silently mis-filed part of every inquiry from that button |
 | 2026-09-29 | `site/css/styles.css`: removed a dead, conflicting `.split-media img { aspect-ratio: 4 / 3.4 }` rule | A later, unconditional rule (`4 / 3.6`) already overrode it everywhere; the first was dead code that would mislead anyone editing it expecting an effect |
 | 2026-09-29 | `tools/optimize-image.py`: `--crop` and `--widths` are validated, and an absolute `name` argument is rejected | Previously: a malformed `--crop` or `--widths` crashed with a raw Python traceback instead of a usable message, and a `name` that looked like a web path (e.g. `/hero`) silently wrote files under the filesystem root instead of `site/images` |
+| 2026-09-29 | Netlify confirmed as the actual host; `netlify.toml` added (publish directory, headers, caching, `www` redirect, and a 404 for `/api/*` since PHP doesn't run there) | Owner tried deploying and saw nothing, because Netlify had no way to know the site lives in `site/`, not the repo root, and this repo's only branch is `develop`, not `main` |
+| 2026-09-29 | Contact form on Netlify will use a form service (Formspree), not a ported Netlify Function | Owner's choice, over porting `inquiry.php`'s logic to JavaScript; `contact.html`'s `action` still defaults to `api/inquiry.php` so Tracks A/B keep working unchanged, and switches with a one-line edit once the Formspree endpoint exists |
+| 2026-09-29 | `contact.html` carries both `extra_info` and `_gotcha` honeypot fields; `inquiry.php` checks both | `_gotcha` is Formspree's own convention; keeping both means the same page works as a honeypot for either backend without renaming anything when switching between Tracks A/B and C |
 

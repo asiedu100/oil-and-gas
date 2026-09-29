@@ -297,8 +297,11 @@ if (empty($_POST) && empty($_FILES) && (int) ($_SERVER['CONTENT_LENGTH'] ?? 0) >
 
 $cfg = config();
 
-// Spam check 1: a hidden field that people never see or fill in. Bots do; they get a fake success.
-if (post('extra_info') !== '') {
+// Spam check 1: hidden fields that people never see or fill in. Bots do; they get a fake success.
+// _gotcha is also checked here as a bonus: it's Formspree's honeypot convention (used when this
+// site is deployed to a static host with a form service instead of this PHP handler, see
+// docs/DEPLOYMENT-RUNBOOK.md Track C), and some bots specifically target that well-known name.
+if (post('extra_info') !== '' || post('_gotcha') !== '') {
     respond(200, ['ok' => true]);
 }
 

@@ -35,6 +35,17 @@ if (form) {
     status.scrollIntoView({ behavior: 'smooth', block: 'center' });
   };
 
+  // Reads an error message from either api/inquiry.php's response ({ error: "..." }) or a form
+  // service's, which often nests it differently (Formspree: { errors: [{ message: "..." }] }).
+  const extractError = (data) => {
+    if (data.error) return data.error;
+    if (data.message) return data.message;
+    if (Array.isArray(data.errors) && data.errors.length) {
+      return data.errors.map((e) => (typeof e === 'string' ? e : e.message)).filter(Boolean).join(' ');
+    }
+    return '';
+  };
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     status.hidden = true;
@@ -56,7 +67,7 @@ if (form) {
       body.set('elapsed', String(Date.now() - loadedAt));
       const res = await fetch(form.action, { method: 'POST', body, headers: { Accept: 'application/json' } });
       const data = await res.json().catch(() => ({}));
-      if (!res.ok || data.ok === false) throw new Error(data.error || data.message || 'Something went wrong.');
+      if (!res.ok || data.ok === false) throw new Error(extractError(data) || 'Something went wrong.');
       form.reset();
       syncTradeFields();
       show(true, 'Thank you. Your inquiry has been sent and our team will respond within 48 hours.');

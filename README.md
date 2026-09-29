@@ -51,7 +51,7 @@ The loose JPEG files in this folder are original photos (source material) and ar
 
 **Waiting on the client:** company email, office hours, licences held, Kwabena Nyarko Twumasi's photo, logo source file, which legal name to use (certificate vs. website), confirmation of the two trading-partner names, confirmations and sign-off (see `docs/CLIENT-APPROVALS.md`).
 
-**Before launch:** choose a host (it needs PHP, HTTPS and email), deploy, create the form settings, connect the domain, lawyer review of the legal pages, full QA pass.
+**Before launch:** deploy to Netlify (`netlify.toml` is ready; set the production branch to `develop` in the Netlify dashboard), get a Formspree account and endpoint and update `contact.html`'s form `action`, connect the domain, lawyer review of the legal pages, full QA pass.
 
 ## Rules to remember when editing
 

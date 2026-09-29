@@ -72,7 +72,8 @@ We kept these from your document. A bank, buyer or regulator may check them, so 
 | **Logo source file** (original .cdr, or an SVG or PDF export) | ☐ Needed | Ask the designer ("Design Hub"). The card image is too small for a sharp, large logo and for social sharing |
 | Domain | ☑ jaboassociates.business | Please confirm the domain is registered in the company's name |
 | **Access to the domain's DNS**, and who hosts the company email | ☐ Needed | So the website can be connected without breaking email |
-| **Hosting account** (provider chosen, and login or a contact who manages it) | ☐ Needed | See Part 4, decision 7 |
+| **Netlify account** login or a contact who manages it | ☐ Needed | Decided: Netlify (Part 4, decision 7) |
+| **Formspree account** for the inquiry form, and the general inbox it should deliver to | ☐ Needed | See Part 4, decision 8 |
 | Two mailboxes on the domain: the inbox that receives inquiries and a sender address such as `inquiries@jaboassociates.business` | ☐ Needed | Created in the hosting or email panel |
 | Photo of **Kwabena Nyarko Twumasi** | ☐ Needed | One received photo has not been identified: please tell us whose it is |
 | Headshots for the other five team members | ☑ Received | Photos of Rev. J. B. Lomo-Mainoo and Rev. Gifty Laale Lomo-Mainoo are low resolution; better ones would look sharper |
@@ -107,7 +108,8 @@ We kept these from your document. A bank, buyer or regulator may check them, so 
 | 4 | **Legal review.** Have a lawyer review the Privacy Policy, Terms, Trade Disclaimer and the Exchange page wording before launch | Yes, before launch | ☐ Arranged with: ________ |
 | 5 | **Analytics.** Track visits and inquiries with a cookie-free tool | Yes, after launch, so that results can be measured | ☐ Yes ☐ No |
 | 6 | **Phase 2** (buyer accounts, LOI/ICPO submission, KYC upload, deal dashboard) | Review after the website has been live for a few months and inquiry volume is known | ☐ Discuss later ☐ Discuss now |
-| 7 | **Hosting.** The website is built to run on any standard web host. It needs PHP, a free HTTPS certificate and email on the domain | Ordinary PHP hosting (for example cPanel) is the simplest; we will supply the exact requirements to check before you buy | Provider: ________ |
+| 7 | **Hosting.** Decided: **Netlify**. Because Netlify only serves static files, the inquiry form now runs through **Formspree** instead of our own server code | — | ☑ Netlify + Formspree |
+| 8 | **Formspree plan.** Confirm the plan you sign up for supports file uploads before we rely on the "Supporting document" field on the Contact page — otherwise that field needs to come off the form | Check Formspree's current plans when signing up | ☐ Confirmed supported ☐ Remove the field |
 
 ---
 
