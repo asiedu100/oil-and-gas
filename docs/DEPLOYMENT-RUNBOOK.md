@@ -255,7 +255,7 @@ Check current pricing before committing. The certain costs are the domain renewa
 - [ ] Client has approved the copy and the content changes
 - [ ] Lawyer has reviewed Privacy, Terms, Disclaimer and the Exchange page wording
 - [ ] Company email, registration number and office hours added to the pages
-- [ ] Kwabena Nyarko Twumasi's photo added (or a decision to launch with initials)
+- [x] Kwabena Nyarko Twumasi's photo added
 - [ ] Hosting chosen and set up; files uploaded, including the hidden files
 - [ ] `api/config.php` created on the server with the real inbox and sender; driver is not `log`
 - [ ] Test inquiry with a large PDF arrives (inbox, not spam); SPF and DKIM are valid

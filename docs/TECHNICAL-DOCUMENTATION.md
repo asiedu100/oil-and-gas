@@ -143,7 +143,7 @@ Pick the crop so the face is roughly centred in a square (left,top,right,bottom 
 - Dialog: the same, with `alt=""` and `sizes="92px"`.
 - Home leadership row: `<span class="avatar"><img src="images/team/kwabena-250.webp" width="250" height="250" alt="" loading="lazy" decoding="async"></span>`.
 
-Existing crops and files: `rev-jb`, `bernard`, `david`, `rev-gifty`, `adomako`. Kwabena is still on initials.
+Existing crops and files: `rev-jb`, `bernard`, `david`, `rev-gifty`, `adomako`, `twumasi`. All six team members now have photos.
 
 ### Add or change products
 The petroleum table is in `products.html` (`<table>` inside `.table-wrap`): each row is a group with the products as `<li>` pills. If you add a new product **group**, also add it to the "Commodity of interest" dropdown in `contact.html` so buyers can select it, and check the links that pre-fill it (`contact.html?commodity=...` must match the option text exactly).
@@ -399,7 +399,6 @@ Written for current versions of Chrome, Edge, Firefox and Safari. The site uses 
 7. **Single language, no CMS.**
 8. **Stock photography** and a logo cropped from a low-resolution image, until the client supplies originals.
 9. **No security headers file yet** (recommended content is in the runbook).
-10. **Team photo for Kwabena Nyarko Twumasi is missing.**
 
 ## 14. Troubleshooting
 
@@ -452,4 +451,5 @@ Written for current versions of Chrome, Edge, Firefox and Safari. The site uses 
 | 2026-09-29 | `contact.html` carries both `extra_info` and `_gotcha` honeypot fields; `inquiry.php` checks both | `_gotcha` is Formspree's own convention; keeping both means the same page works as a honeypot for either backend without renaming anything when switching between Tracks A/B and C |
 | 2026-09-29 | `jaboassociates.business` DNS pointed at Netlify (external A/CNAME records at AveHost, the registrar); site confirmed live over HTTP; HTTPS pending Netlify's automatic certificate | First real deployment of the project |
 | 2026-09-29 | Social share image (`og.jpg`) replaced: now the plain logo graphic centred on white, not the photo-plus-headline card built earlier | Client's preference, after seeing both; the plain-logo version has no readable text loss even as a small chat thumbnail, and needs no maintenance when the headline or hero photo changes |
+| 2026-10-01 | All six team photos now real: Rev. J. B. Lomo-Mainoo's photo replaced with a sharper one (`rev.jpeg`), and Kwabena Nyarko Twumasi's long-missing photo added (`nyarko.jpeg`, cropped to `twumasi-250/503.webp`) | Client supplied both files; closes the last placeholder-initials gap on the Team page and the Home leadership row |
 

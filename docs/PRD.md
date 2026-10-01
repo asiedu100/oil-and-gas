@@ -98,7 +98,7 @@ Priority: **M** = must, **S** = should, **C** = could. Status: **Built**, **Pend
 |---|---|---|---|
 | FR-10 | **Home:** hero with the headline and two buttons; numbers strip; four business-area tiles; short about; leadership row with photos; closing call to action | M | Built (numbers strip needs client confirmation) |
 | FR-11 | **About:** story, mission, vision, four values, a trading-partners list, social responsibility | M | Built (current social projects pending; trading-partner names and public-naming approval pending, see `CLIENT-APPROVALS.md`) |
-| FR-12 | **Team:** six cards with photo, name, title and short bio; "Read full profile" opens the full bio in a dialog that closes with the button, the backdrop or Esc | M | Built (5 of 6 photos in) |
+| FR-12 | **Team:** six cards with photo, name, title and short bio; "Read full profile" opens the full bio in a dialog that closes with the button, the backdrop or Esc | M | Built (6 of 6 photos in) |
 | FR-13 | **Products:** four-step trade process; petroleum products grouped in five groups; fertilizers; precious and rare earth minerals; pricing note; "Request a Quote" | M | Built (mineral list pending) |
 | FR-14 | **Exchange:** headline, intro, "in development, not live or licensed" notice, four principles, looking ahead, "Partner With Us" | M | Built |
 | FR-15 | **Services:** commodity finance, trade finance, price transparency, risk management and hedging, sustainability and ESG | M | Built (direct vs partner-bank wording pending) |
@@ -219,7 +219,7 @@ These come from the client brief and the risk review. They apply to every future
 
 **Done:** all pages and the form; responsive layout; images; SEO basics; documentation.
 
-**Waiting on the client:** company email, office hours, licences held, photo of Kwabena Nyarko Twumasi, logo source file, confirmation of the numbers strip, mineral list, finance model wording, social responsibility projects, confirmation of the two trading-partner names and permission to name them publicly, which legal name to use (certificate vs. website), approval of the content changes.
+**Waiting on the client:** company email, office hours, licences held, logo source file, confirmation of the numbers strip, mineral list, finance model wording, social responsibility projects, confirmation of the two trading-partner names and permission to name them publicly, which legal name to use (certificate vs. website), approval of the content changes.
 
 **Before launch:** deploy to Netlify; get a Formspree account and endpoint and update `contact.html`; connect the domain and DNS; lawyer review of legal pages and Exchange wording; full QA pass (see `QA-CHECKLIST.md`); submit to Search Console.
 

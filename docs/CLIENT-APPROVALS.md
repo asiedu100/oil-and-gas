@@ -75,8 +75,8 @@ We kept these from your document. A bank, buyer or regulator may check them, so 
 | **Netlify account** login or a contact who manages it | ☐ Needed | Decided: Netlify (Part 4, decision 7) |
 | **Formspree account** for the inquiry form, and the general inbox it should deliver to | ☐ Needed | See Part 4, decision 8 |
 | Two mailboxes on the domain: the inbox that receives inquiries and a sender address such as `inquiries@jaboassociates.business` | ☐ Needed | Created in the hosting or email panel |
-| Photo of **Kwabena Nyarko Twumasi** | ☐ Needed | One received photo has not been identified: please tell us whose it is |
-| Headshots for the other five team members | ☑ Received | Photos of Rev. J. B. Lomo-Mainoo and Rev. Gifty Laale Lomo-Mainoo are low resolution; better ones would look sharper |
+| Photo of **Kwabena Nyarko Twumasi** | ☑ Received | Added and cropped |
+| Headshots for all six team members | ☑ Received | Rev. J. B. Lomo-Mainoo's photo has been replaced with a sharper one; Rev. Gifty Laale Lomo-Mainoo's is still a lower-resolution photo, a sharper one would look better |
 | Confirmation of which photo belongs to which person | ☑ Done for five | |
 | Office address, phone and WhatsApp | ☑ Received | No. 4 Nii Boi Maclean Street, off Dansoman Road, Accra; P.O. Box CT 2016, Cantonments, Accra; +233 24 423 9557 |
 | **General company email** for inquiries | ☐ Needed | We are using `info@jaboassociates.business` as a placeholder |
